@@ -69,7 +69,7 @@ struct HandshakeSession {
 
 	/**
 	 * The port that the application is expected to start on. Only meaningful
-	 * if `config->genericApp || config->findFreePort`.
+	 * if `config->findFreePort`.
 	 */
 	unsigned int expectedStartPort;
 

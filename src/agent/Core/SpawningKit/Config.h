@@ -145,14 +145,14 @@ public:
 	bool wrapperSuppliedByThirdParty: 1;
 
 	/**
-	 * If the app is not generic (`!genericApp`), then this specifies
+	 * If the app is not generic (`!genericApp`) or a unix socket is not supplied, then this specifies
 	 * whether SpawningKit should find a free port to pass to the app
 	 * so that it can listen on that port.
 	 * This is always done if the app is generic, but *can* be done
 	 * for non-generic apps as well.
 	 *
 	 * @hinted_parseable
-	 * @only_meaningful_if !config.genericApp
+	 * @only_meaningful_if !config.genericApp || !options.bindAddress
 	 */
 	bool findFreePort: 1;
 
@@ -190,10 +190,11 @@ public:
 	/**
 	 * The command to run in order to start the app.
 	 *
-	 * If `genericApp` is true, then the command string must contain '$PORT'.
-	 * The command string is expected to start the app on the given port.
+	 * If `genericApp` is true, then either the command string must contain
+	 * '$PORT' OR specific options.bindAddress must be defined.
+	 * The command string is expected to start the app on the given address.
 	 * SpawningKit will take care of passing an appropriate $PORT value to
-	 * the app.
+	 * the app if necessary.
 	 *
 	 * If `genericApp` is false, then the command string is expected do
 	 * either one of these things:

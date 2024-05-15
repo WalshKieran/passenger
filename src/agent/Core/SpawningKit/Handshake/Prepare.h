@@ -253,7 +253,7 @@ private:
 		if (config->preloadBundler) {
 			args["preload_bundler"] = config->preloadBundler;
 		}
-		if (config->genericApp || config->findFreePort) {
+		if (config->findFreePort) {
 			args["expected_start_port"] = session.expectedStartPort;
 		}
 		if (!config->apiKey.empty()) {
@@ -457,7 +457,7 @@ private:
 	}
 
 	void throwSpawnExceptionBecauseOfPortFindingTimeout() {
-		assert(config->genericApp || config->findFreePort);
+		assert(config->findFreePort);
 		SpawnException e(TIMEOUT_ERROR, session.journey, config);
 		e.setProblemDescriptionHTML(
 			"<p>The " PROGRAM_NAME " application server tried"
@@ -505,7 +505,7 @@ private:
 	}
 
 	void throwSpawnExceptionBecauseOfFailureToFindFreePort() {
-		assert(config->genericApp || config->findFreePort);
+		assert(config->findFreePort);
 		unsigned int minPortRange, maxPortRange;
 		{
 			boost::lock_guard<boost::mutex> l(context->syncher);
@@ -576,7 +576,7 @@ public:
 			UPDATE_TRACE_POINT();
 			// Disabled to fix CVE-2017-16355
 			//inferApplicationInfo();
-			if (config->genericApp || config->findFreePort) {
+			if (config->findFreePort) {
 				findFreePortOrSocketFile();
 			}
 

@@ -267,7 +267,7 @@ private:
 			throw e.finalize();
 		}
 
-		return (config->genericApp && socketIsNowPingable)
+		return (socketIsNowPingable)
 			|| (!config->genericApp && finishState != NOT_FINISHED);
 	}
 
@@ -301,7 +301,7 @@ private:
 		setResultType(result);
 
 		if (socketIsNowPingable) {
-			assert(config->genericApp || config->findFreePort);
+			assert(config->findFreePort);
 			result.sockets.push_back(Result::Socket());
 			Result::Socket &socket = result.sockets.back();
 			socket.address = "tcp://127.0.0.1:" + toString(session.expectedStartPort);
@@ -1729,7 +1729,7 @@ public:
 		try {
 			initializeStdchannelsCapturing();
 			startWatchingProcessExit();
-			if (config->genericApp || config->findFreePort) {
+			if (config->findFreePort) {
 				startWatchingSocketPingability();
 			}
 			if (!config->genericApp) {

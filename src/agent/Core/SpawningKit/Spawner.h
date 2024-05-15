@@ -101,6 +101,7 @@ protected:
 		} else if (options.appType.empty()) {
 			config->genericApp = true;
 			config->startCommand = options.appStartCommand;
+			config->findFreePort = (options.bindAddress == NULL);
 		} else {
 			startCommand = options.getStartCommand(*context->resourceLocator,
 				*context->wrapperRegistry);
